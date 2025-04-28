@@ -1,0 +1,12 @@
+# Terraform state
+*.tfstate
+*.tfstate.backup
+.terraform/
+
+# Sensible config
+terraform.tfvars
+
+# Docker volumes
+nodered_data/
+influxdb_data/
+grafana_data/

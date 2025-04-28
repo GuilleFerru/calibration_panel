@@ -1,0 +1,6 @@
+FROM nodered/node-red:latest
+
+# Instalar el plugin Siemens S7
+RUN npm install --unsafe-perm node-red-contrib-s7
+RUN npm install --unsafe-perm node-red-contrib-influxdb
+

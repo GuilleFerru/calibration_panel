@@ -1,0 +1,1253 @@
+[
+    {
+        "id": "6a7311205a4adc11",
+        "type": "tab",
+        "label": "PLC DATA",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "18aeae1926b8fb99",
+        "type": "s7 endpoint",
+        "transport": "iso-on-tcp",
+        "address": "192.168.0.1",
+        "port": "102",
+        "rack": "0",
+        "slot": "1",
+        "localtsaphi": "01",
+        "localtsaplo": "00",
+        "remotetsaphi": "01",
+        "remotetsaplo": "00",
+        "connmode": "rack-slot",
+        "adapter": "",
+        "busaddr": 2,
+        "cycletime": "1000",
+        "timeout": "2000",
+        "name": "PLC",
+        "vartable": [
+            {
+                "addr": "DB1,REAL16",
+                "name": "AI00_PV"
+            },
+            {
+                "addr": "DB1,REAL4",
+                "name": "AI00_URV"
+            },
+            {
+                "addr": "DB1,REAL0",
+                "name": "AI00_LRV"
+            },
+            {
+                "addr": "DB1,REAL8",
+                "name": "AI00_LPF"
+            },
+            {
+                "addr": "DB1,REAL12",
+                "name": "AI00_UPF"
+            },
+            {
+                "addr": "DB1,REAL36",
+                "name": "AI01_PV"
+            },
+            {
+                "addr": "DB1,REAL40",
+                "name": "AI02_PV"
+            },
+            {
+                "addr": "DB1,REAL44",
+                "name": "AI02_LRV"
+            },
+            {
+                "addr": "DB1,REAL48",
+                "name": "AI02_URV"
+            },
+            {
+                "addr": "DB1,REAL52",
+                "name": "AI02_LPF"
+            },
+            {
+                "addr": "DB1,REAL56",
+                "name": "AI02_UPF"
+            },
+            {
+                "addr": "DB1,REAL60",
+                "name": "AI03_PV"
+            },
+            {
+                "addr": "DB1,REAL64",
+                "name": "AI03_LRV"
+            },
+            {
+                "addr": "DB1,REAL68",
+                "name": "AI03_URV"
+            },
+            {
+                "addr": "DB1,REAL72",
+                "name": "AI03_LPF"
+            },
+            {
+                "addr": "DB1,REAL76",
+                "name": "AI03_UPF"
+            },
+            {
+                "addr": "DB1,REAL80",
+                "name": "AO00_OUT"
+            },
+            {
+                "addr": "DB1,REAL84",
+                "name": "AO01_OUT"
+            },
+            {
+                "addr": "DB1,X88.0",
+                "name": "di00_input"
+            },
+            {
+                "addr": "DB1,X88.1",
+                "name": "di01_input"
+            },
+            {
+                "addr": "DB1,X88.2",
+                "name": "di02_input"
+            },
+            {
+                "addr": "DB1,X88.3",
+                "name": "di03_input"
+            },
+            {
+                "addr": "DB1,X89.6",
+                "name": "DO00_OUT"
+            },
+            {
+                "addr": "DB1,X89.7",
+                "name": "DO01_OUT"
+            },
+            {
+                "addr": "DB1,X90.0",
+                "name": "DO02_OUT"
+            },
+            {
+                "addr": "DB1,X90.1",
+                "name": "DO03_OUT"
+            },
+            {
+                "addr": "DB1,REAL92",
+                "name": "AI02_OUT_FEED"
+            },
+            {
+                "addr": "DB1,REAL96",
+                "name": "AI03_OUT_FEED"
+            }
+        ]
+    },
+    {
+        "id": "eb62f4a37356a9bb",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "plc_data_bucket_30d",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://influxdb_prod:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "842c5309cb6a0bcd",
+        "type": "Stackhero-InfluxDB-v2-Server",
+        "name": "plc_data_bucket_7d",
+        "host": "influxdb_prod",
+        "port": "8086",
+        "tls": false
+    },
+    {
+        "id": "b2b5d4703beef4f4",
+        "type": "Stackhero-InfluxDB-v2-Server",
+        "name": "plc_data_bucket_30d",
+        "host": "influxdb_prod",
+        "port": "8086",
+        "tls": false
+    },
+    {
+        "id": "8b381bd95889d862",
+        "type": "s7 in",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "mode": "all",
+        "variable": "AI00_PV",
+        "diff": false,
+        "name": "PLC_DATA",
+        "x": 140,
+        "y": 60,
+        "wires": [
+            [
+                "de48a2fd4ee54a62"
+            ]
+        ]
+    },
+    {
+        "id": "4342fa121f0fcc7c",
+        "type": "influxdb out",
+        "z": "6a7311205a4adc11",
+        "influxdb": "eb62f4a37356a9bb",
+        "name": "plc_data_bucket_30d",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "GuilleFerru_sa",
+        "bucket": "plc_data_bucket_30d",
+        "x": 820,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "de48a2fd4ee54a62",
+        "type": "change",
+        "z": "6a7311205a4adc11",
+        "name": "PREP_AI_PV_DATA",
+        "rules": [
+            {
+                "t": "set",
+                "p": "measurement",
+                "pt": "msg",
+                "to": "AI_PV_DATA",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "fields.ai_00pv",
+                "pt": "msg",
+                "to": "$round(msg.payload.AI00_PV, 2)",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "fields.ai_01pv",
+                "pt": "msg",
+                "to": "$round(msg.payload.AI01_PV, 1)",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "fields.ai_02pv",
+                "pt": "msg",
+                "to": "$round(msg.payload.AI02_PV, 2)",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "fields.ai_03pv",
+                "pt": "msg",
+                "to": "$round(msg.payload.AI03_PV, 2)",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "timestamp",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 60,
+        "wires": [
+            [
+                "848d493994f4aacf"
+            ]
+        ]
+    },
+    {
+        "id": "848d493994f4aacf",
+        "type": "change",
+        "z": "6a7311205a4adc11",
+        "name": "SET_PAYLOAD",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "msg.fields",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 60,
+        "wires": [
+            [
+                "4342fa121f0fcc7c"
+            ]
+        ]
+    },
+    {
+        "id": "3009804bdb22ddf6",
+        "type": "s7 out",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "variable": "AO00_OUT",
+        "name": "AO00_OUT",
+        "x": 630,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "5dda4d9f7890945a",
+        "type": "http in",
+        "z": "6a7311205a4adc11",
+        "name": "SET_AO00_OUTPUT",
+        "url": "/ao0OutValues",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 220,
+        "y": 880,
+        "wires": [
+            [
+                "317b9ea276ec96ca",
+                "dbb6216bcd199d30"
+            ]
+        ]
+    },
+    {
+        "id": "317b9ea276ec96ca",
+        "type": "http response",
+        "z": "6a7311205a4adc11",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 440,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "dbb6216bcd199d30",
+        "type": "function",
+        "z": "6a7311205a4adc11",
+        "name": "function 9",
+        "func": "let out = parseFloat(msg.payload[\"AO00OUT\"]);\n\nreturn [\n  { payload: out }, // salida 1: AI03_LRV\n];",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 880,
+        "wires": [
+            [
+                "3009804bdb22ddf6"
+            ]
+        ]
+    },
+    {
+        "id": "0515f646a5f5f3d8",
+        "type": "s7 out",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "variable": "AO01_OUT",
+        "name": "AO01_OUT",
+        "x": 630,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "6df86db7686b7475",
+        "type": "http in",
+        "z": "6a7311205a4adc11",
+        "name": "SET_AO01_OUTPUT",
+        "url": "/ao1OutValues",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 220,
+        "y": 1000,
+        "wires": [
+            [
+                "f0eab984ab72ec1a",
+                "cb5ffb2a70135b88"
+            ]
+        ]
+    },
+    {
+        "id": "f0eab984ab72ec1a",
+        "type": "http response",
+        "z": "6a7311205a4adc11",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 440,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "cb5ffb2a70135b88",
+        "type": "function",
+        "z": "6a7311205a4adc11",
+        "name": "function 10",
+        "func": "let out = parseFloat(msg.payload[\"AO01OUT\"]);\n\nreturn [\n  { payload: out }, // salida 1: AI03_LRV\n];",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 1000,
+        "wires": [
+            [
+                "0515f646a5f5f3d8"
+            ]
+        ]
+    },
+    {
+        "id": "49ad844549c1aea9",
+        "type": "s7 in",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "mode": "single",
+        "variable": "AO00_OUT",
+        "diff": false,
+        "name": "PLC_DATA_AO00_OUT",
+        "x": 670,
+        "y": 880,
+        "wires": [
+            [
+                "038bbb16c297b3b0"
+            ]
+        ]
+    },
+    {
+        "id": "c2720c6419a0ee20",
+        "type": "s7 in",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "mode": "single",
+        "variable": "AO01_OUT",
+        "diff": false,
+        "name": "PLC_DATA_AO01_OUT",
+        "x": 670,
+        "y": 940,
+        "wires": [
+            [
+                "a3f411578dc06283"
+            ]
+        ]
+    },
+    {
+        "id": "038bbb16c297b3b0",
+        "type": "function",
+        "z": "6a7311205a4adc11",
+        "name": "function 11",
+        "func": "let out = parseFloat(msg.payload);\n\nmsg.payload = {\n  bucket: 'plc_data_bucket_7d',\n  precision: 'ms',\n  data: [\n    {\n      measurement: 'AO_PV_DATA',\n      tags : {\n        sensor: \"AO00\",\n      },\n      fields : {\n        ao_00out: out,\n      },\n      timestamp: Date.now()\n    }\n  ]\n};\n\ndelete msg.topic;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 880,
+        "wires": [
+            [
+                "a0054d888c109b96"
+            ]
+        ]
+    },
+    {
+        "id": "a3f411578dc06283",
+        "type": "function",
+        "z": "6a7311205a4adc11",
+        "name": "function 12",
+        "func": "let out = parseFloat(msg.payload);\n\nmsg.payload = {\n  bucket: 'plc_data_bucket_7d',\n  precision: 'ms',\n  data: [\n    {\n      measurement: 'AO_PV_DATA',\n      tags : {\n        sensor: \"AO01\",\n      },\n      fields : {\n        ao_01out: out,\n      },\n      timestamp: Date.now()\n    }\n  ]\n};\n\ndelete msg.topic;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 940,
+        "wires": [
+            [
+                "a0054d888c109b96"
+            ]
+        ]
+    },
+    {
+        "id": "5f84eb2ab0c3058e",
+        "type": "s7 in",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "mode": "single",
+        "variable": "di00_input",
+        "diff": true,
+        "name": "PLC_DATA_DI00_INPUT",
+        "x": 230,
+        "y": 1080,
+        "wires": [
+            [
+                "93972e2d6e26f07c"
+            ]
+        ]
+    },
+    {
+        "id": "93972e2d6e26f07c",
+        "type": "function",
+        "z": "6a7311205a4adc11",
+        "name": "function 13",
+        "func": "let input = msg.payload === true ? 1 : 0;\n\nlet fieldName = typeof msg.topic === 'string' ? msg.topic : 'UNKNOWN';\nlet sensorName = fieldName.slice(0, 4).toUpperCase();\n\n\nmsg.payload = {\n  bucket: 'plc_data_bucket_7d',\n  precision: 'ms',\n  data: [\n    {\n      measurement: 'DI_PV_DATA',\n      tags : {\n        sensor: sensorName,\n      },\n      fields : {\n        [fieldName]: input,\n      },\n      timestamp: Date.now()\n    }\n  ]\n};\n\ndelete msg.topic;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 1160,
+        "wires": [
+            [
+                "a0054d888c109b96"
+            ]
+        ]
+    },
+    {
+        "id": "72b2a9be8c242d4c",
+        "type": "s7 in",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "mode": "single",
+        "variable": "di01_input",
+        "diff": true,
+        "name": "PLC_DATA_DI01_INPUT",
+        "x": 230,
+        "y": 1140,
+        "wires": [
+            [
+                "93972e2d6e26f07c"
+            ]
+        ]
+    },
+    {
+        "id": "ae5a6fa7453feb7d",
+        "type": "s7 in",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "mode": "single",
+        "variable": "di02_input",
+        "diff": true,
+        "name": "PLC_DATA_DI02_INPUT",
+        "x": 230,
+        "y": 1200,
+        "wires": [
+            [
+                "93972e2d6e26f07c"
+            ]
+        ]
+    },
+    {
+        "id": "38cdfbc0a5d28c7c",
+        "type": "s7 in",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "mode": "single",
+        "variable": "di03_input",
+        "diff": true,
+        "name": "PLC_DATA_DI03_INPUT",
+        "x": 230,
+        "y": 1260,
+        "wires": [
+            [
+                "93972e2d6e26f07c"
+            ]
+        ]
+    },
+    {
+        "id": "1ae62cb70abfabf9",
+        "type": "http in",
+        "z": "6a7311205a4adc11",
+        "name": "SET_DO_OUTPUTS",
+        "url": "/testValues",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 220,
+        "y": 1340,
+        "wires": [
+            [
+                "2b9646e158d6b268",
+                "5d912ce4df93c6aa"
+            ]
+        ]
+    },
+    {
+        "id": "2b9646e158d6b268",
+        "type": "http response",
+        "z": "6a7311205a4adc11",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 500,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "5d912ce4df93c6aa",
+        "type": "function",
+        "z": "6a7311205a4adc11",
+        "name": "function 17",
+        "func": "let data = msg.payload?.DO_OUTPUTS || [];\n\n// Inicializar todas las salidas como false\nlet outputs = {\n    do0: false,\n    do1: false,\n    do2: false,\n    do3: false\n};\n\n// Activar las salidas que vienen en el array\ndata.forEach(n => {\n    if (n === 0) outputs.do0 = true;\n    if (n === 1) outputs.do1 = true;\n    if (n === 2) outputs.do2 = true;\n    if (n === 3) outputs.do3 = true;\n});\n\n// Retornar como objeto para guardar o escribir al PLC\nmsg.payload = outputs;\n//return msg;\nreturn [\n    {\n        payload: outputs.do0,\n        topic: \"do00_out\"\n    },\n    {\n        payload: outputs.do1,\n        topic: \"do01_out\"\n    },\n    {\n        payload: outputs.do2,\n        topic: \"do02_out\"\n    },\n    {\n        payload: outputs.do3,\n        topic: \"do03_out\"\n    },\n];",
+        "outputs": 4,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 1360,
+        "wires": [
+            [
+                "d885bdc5a97111e4"
+            ],
+            [
+                "2d68fc476947e1db"
+            ],
+            [
+                "8f340221abf89d08"
+            ],
+            [
+                "ec100133ebe484fd"
+            ]
+        ]
+    },
+    {
+        "id": "d885bdc5a97111e4",
+        "type": "s7 out",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "variable": "DO00_OUT",
+        "name": "DO00_OUT",
+        "x": 730,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "2d68fc476947e1db",
+        "type": "s7 out",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "variable": "DO01_OUT",
+        "name": "DO01_OUT",
+        "x": 730,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "8f340221abf89d08",
+        "type": "s7 out",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "variable": "DO02_OUT",
+        "name": "DO02_OUT",
+        "x": 730,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "ec100133ebe484fd",
+        "type": "s7 out",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "variable": "DO03_OUT",
+        "name": "DO03_OUT",
+        "x": 730,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "3f3db3c600bb8294",
+        "type": "function",
+        "z": "6a7311205a4adc11",
+        "name": "function 18",
+        "func": "let input = msg.payload === true ? 1 : 0;\n\nlet fieldName = typeof msg.topic === 'string' ? msg.topic : 'UNKNOWN';\nlet sensorName = fieldName.slice(0, 4).toUpperCase();\n\n\nmsg.payload = {\n  bucket: 'plc_data_bucket_7d',\n  precision: 'ms',\n  data: [\n    {\n      measurement: 'DO_PV_DATA',\n      tags : {\n        sensor: sensorName,\n      },\n      fields : {\n        [fieldName]: input,\n      },\n      timestamp: Date.now()\n    }\n  ]\n};\n\ndelete msg.topic;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 1440,
+        "wires": [
+            [
+                "a0054d888c109b96"
+            ]
+        ]
+    },
+    {
+        "id": "c5c7ec2dd7090708",
+        "type": "s7 in",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "mode": "single",
+        "variable": "DO00_OUT",
+        "diff": true,
+        "name": "DO00_OUT",
+        "x": 190,
+        "y": 1400,
+        "wires": [
+            [
+                "3f3db3c600bb8294"
+            ]
+        ]
+    },
+    {
+        "id": "f674edd94fb6741b",
+        "type": "s7 in",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "mode": "single",
+        "variable": "DO01_OUT",
+        "diff": true,
+        "name": "DO01_OUT",
+        "x": 190,
+        "y": 1460,
+        "wires": [
+            [
+                "3f3db3c600bb8294"
+            ]
+        ]
+    },
+    {
+        "id": "4957c6c260cce60c",
+        "type": "s7 in",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "mode": "single",
+        "variable": "DO02_OUT",
+        "diff": true,
+        "name": "DO02_OUT",
+        "x": 190,
+        "y": 1520,
+        "wires": [
+            [
+                "3f3db3c600bb8294"
+            ]
+        ]
+    },
+    {
+        "id": "b2ad099f93d60122",
+        "type": "s7 in",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "mode": "single",
+        "variable": "DO03_OUT",
+        "diff": true,
+        "name": "DO03_OUT",
+        "x": 190,
+        "y": 1580,
+        "wires": [
+            [
+                "3f3db3c600bb8294"
+            ]
+        ]
+    },
+    {
+        "id": "a0054d888c109b96",
+        "type": "Stackhero-InfluxDB-v2-write",
+        "z": "6a7311205a4adc11",
+        "server": "842c5309cb6a0bcd",
+        "name": "plc_data_bucket_7d",
+        "x": 1240,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7fe09f792ac53cf6",
+        "type": "s7 out",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "variable": "AI02_UPF",
+        "name": "AI02_UPF",
+        "x": 730,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "74d93ec187b0a502",
+        "type": "s7 out",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "variable": "AI02_LPF",
+        "name": "AI02_LPF",
+        "x": 720,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "7b09fd34cd92b365",
+        "type": "s7 out",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "variable": "AI02_URV",
+        "name": "AI02_URV",
+        "x": 730,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "24f364b6f9d86d9f",
+        "type": "s7 out",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "variable": "AI02_LRV",
+        "name": "AI02_LRV",
+        "x": 730,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "ec2a4ca91a032db6",
+        "type": "http in",
+        "z": "6a7311205a4adc11",
+        "name": "SET_AI02_RANGES",
+        "url": "/ai2rangeValues",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 240,
+        "y": 160,
+        "wires": [
+            [
+                "46ac6fc05f761934",
+                "bc2436754157bd0f"
+            ]
+        ]
+    },
+    {
+        "id": "46ac6fc05f761934",
+        "type": "http response",
+        "z": "6a7311205a4adc11",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 460,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "bc2436754157bd0f",
+        "type": "function",
+        "z": "6a7311205a4adc11",
+        "name": "function 4",
+        "func": "let lrv = parseFloat(msg.payload[\"AI02LRV\"]);\nlet urv = parseFloat(msg.payload[\"AI02URV\"]);\nlet unit = msg.payload[\"AI02UNIT\"];\n\nreturn [\n  { payload: lrv }, // salida 1: AI02_LRV\n  { payload: urv },  // salida 2: AI02_URV\n  {\n    payload: unit,\n    topic: \"unit\"\n  }  // salida 3: AI02_UNIT\n];",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 200,
+        "wires": [
+            [
+                "74d93ec187b0a502",
+                "24f364b6f9d86d9f"
+            ],
+            [
+                "7b09fd34cd92b365",
+                "7fe09f792ac53cf6"
+            ],
+            [
+                "f19e38e6dac45ee0"
+            ]
+        ]
+    },
+    {
+        "id": "e6800a87528ee5dd",
+        "type": "s7 in",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "mode": "single",
+        "variable": "AI02_LRV",
+        "diff": true,
+        "name": "PLC_DATA_AI02_LRV",
+        "x": 240,
+        "y": 240,
+        "wires": [
+            [
+                "f19e38e6dac45ee0"
+            ]
+        ]
+    },
+    {
+        "id": "fc095886d835bfb4",
+        "type": "s7 in",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "mode": "single",
+        "variable": "AI02_URV",
+        "diff": true,
+        "name": "PLC_DATA_AI02_URV",
+        "x": 240,
+        "y": 300,
+        "wires": [
+            [
+                "f19e38e6dac45ee0"
+            ]
+        ]
+    },
+    {
+        "id": "f19e38e6dac45ee0",
+        "type": "join",
+        "z": "6a7311205a4adc11",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": false,
+        "accumulate": true,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 470,
+        "y": 300,
+        "wires": [
+            [
+                "e55e8bb82f1eba20"
+            ]
+        ]
+    },
+    {
+        "id": "e55e8bb82f1eba20",
+        "type": "function",
+        "z": "6a7311205a4adc11",
+        "name": "function 5",
+        "func": "const lrv = parseFloat(msg.payload[\"AI02_LRV\"]);\nconst urv = parseFloat(msg.payload[\"AI02_URV\"]);\nconst unit = msg.payload[\"unit\"];\n\nmsg.payload = {\n  bucket: 'plc_data_bucket_30d',\n  precision: 'ms',\n  data: [\n    {\n      measurement: 'AI_CONFIG_DATA',\n      tags : {\n        sensor: \"AI02\",\n      },\n      fields : {\n        ai_02lrv: lrv,\n        ai_02urv: urv,\n        ai_02unit: unit\n      },\n      timestamp: Date.now()\n    }\n  ]\n};\n\ndelete msg.topic;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 360,
+        "wires": [
+            [
+                "e118ae8c2e7f96db"
+            ]
+        ]
+    },
+    {
+        "id": "479be6760a648445",
+        "type": "s7 out",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "variable": "AI03_UPF",
+        "name": "AI03_UPF",
+        "x": 730,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "e2ca66e55374b52a",
+        "type": "s7 out",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "variable": "AI03_LPF",
+        "name": "AI03_LPF",
+        "x": 720,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "48368be3afaeb566",
+        "type": "s7 out",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "variable": "AI03_URV",
+        "name": "AI03_URV",
+        "x": 730,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "3b0b01d991e1cf4d",
+        "type": "s7 out",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "variable": "AI03_LRV",
+        "name": "AI03_LRV",
+        "x": 730,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "ef18b7945e39ef8b",
+        "type": "http in",
+        "z": "6a7311205a4adc11",
+        "name": "SET_AI03_RANGES",
+        "url": "/ai3rangeValues",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 280,
+        "y": 480,
+        "wires": [
+            [
+                "3a31c03fde88698d",
+                "0b52c4890a8ffc22"
+            ]
+        ]
+    },
+    {
+        "id": "3a31c03fde88698d",
+        "type": "http response",
+        "z": "6a7311205a4adc11",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 500,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "0b52c4890a8ffc22",
+        "type": "function",
+        "z": "6a7311205a4adc11",
+        "name": "function 7",
+        "func": "let lrv = parseFloat(msg.payload[\"AI03LRV\"]);\nlet urv = parseFloat(msg.payload[\"AI03URV\"]);\nlet unit = msg.payload[\"AI03UNIT\"];\n\nreturn [\n  { payload: lrv }, // salida 1: AI03_LRV\n  { payload: urv },  // salida 2: AI03_URV\n  {\n    payload: unit,\n    topic: \"unit\"\n  }  // salida 3: AI03_UNIT\n];",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 500,
+        "wires": [
+            [
+                "e2ca66e55374b52a",
+                "3b0b01d991e1cf4d"
+            ],
+            [
+                "48368be3afaeb566",
+                "479be6760a648445"
+            ],
+            [
+                "2cbb5301a36a8ae7"
+            ]
+        ]
+    },
+    {
+        "id": "5f046ea786abea2f",
+        "type": "s7 in",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "mode": "single",
+        "variable": "AI03_LRV",
+        "diff": true,
+        "name": "PLC_DATA_AI03_LRV",
+        "x": 280,
+        "y": 620,
+        "wires": [
+            [
+                "2cbb5301a36a8ae7"
+            ]
+        ]
+    },
+    {
+        "id": "3c1867f9cb9d4ae9",
+        "type": "s7 in",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "mode": "single",
+        "variable": "AI03_URV",
+        "diff": true,
+        "name": "PLC_DATA_AI03_URV",
+        "x": 280,
+        "y": 680,
+        "wires": [
+            [
+                "2cbb5301a36a8ae7"
+            ]
+        ]
+    },
+    {
+        "id": "2cbb5301a36a8ae7",
+        "type": "join",
+        "z": "6a7311205a4adc11",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": false,
+        "accumulate": true,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 550,
+        "y": 660,
+        "wires": [
+            [
+                "18d9bf7babc374ec"
+            ]
+        ]
+    },
+    {
+        "id": "18d9bf7babc374ec",
+        "type": "function",
+        "z": "6a7311205a4adc11",
+        "name": "function 8",
+        "func": "const lrv = parseFloat(msg.payload[\"AI03_LRV\"]);\nconst urv = parseFloat(msg.payload[\"AI03_URV\"]);\nconst unit = msg.payload[\"unit\"];\n\nmsg.payload = {\n  bucket: 'plc_data_bucket_30d',\n  precision: 'ms',\n  data: [\n    {\n      measurement: 'AI_CONFIG_DATA',\n      tags : {\n        sensor: \"AI03\",\n      },\n      fields : {\n        ai_03lrv: lrv,\n        ai_03urv: urv,\n        ai_03unit: unit\n      },\n      timestamp: Date.now()\n    }\n  ]\n};\n\ndelete msg.topic;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 660,
+        "wires": [
+            [
+                "e118ae8c2e7f96db"
+            ]
+        ]
+    },
+    {
+        "id": "e118ae8c2e7f96db",
+        "type": "Stackhero-InfluxDB-v2-write",
+        "z": "6a7311205a4adc11",
+        "server": "b2b5d4703beef4f4",
+        "name": "plc_data_bucket_30d",
+        "x": 1060,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f98e72058aa0bf24",
+        "type": "s7 in",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "mode": "single",
+        "variable": "AI02_OUT_FEED",
+        "diff": true,
+        "name": "AI02_OUT_FEED",
+        "x": 210,
+        "y": 1660,
+        "wires": [
+            [
+                "107a08f6be35e543"
+            ]
+        ]
+    },
+    {
+        "id": "6b1ee65e889fa663",
+        "type": "s7 in",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "mode": "single",
+        "variable": "AI03_OUT_FEED",
+        "diff": true,
+        "name": "AI03_OUT_FEED",
+        "x": 210,
+        "y": 1720,
+        "wires": [
+            [
+                "f71ec9c838a1b04a"
+            ]
+        ]
+    },
+    {
+        "id": "107a08f6be35e543",
+        "type": "function",
+        "z": "6a7311205a4adc11",
+        "name": "function 20",
+        "func": "let data = parseFloat(msg.payload.toFixed(2))\n\nif (data >= 118.51) data = 0\n\nmsg.payload = {\n  bucket: 'plc_data_bucket_7d',\n  precision: 'ms',\n  data: [\n    {\n      measurement: 'AI_PV_DATA',\n      tags : {\n        sensor: \"AI02_FEED\",\n      },\n      fields : {\n        ai_02pv: data,\n      },\n      timestamp: Date.now()\n    }\n  ]\n};\n\ndelete msg.topic;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 1660,
+        "wires": [
+            [
+                "a0054d888c109b96"
+            ]
+        ]
+    },
+    {
+        "id": "f71ec9c838a1b04a",
+        "type": "function",
+        "z": "6a7311205a4adc11",
+        "name": "function 21",
+        "func": "let data = parseFloat(msg.payload.toFixed(2))\n\nif (data >= 118.51) data = 0\n\nmsg.payload = {\n  bucket: 'plc_data_bucket_7d',\n  precision: 'ms',\n  data: [\n    {\n      measurement: 'AI_PV_DATA',\n      tags : {\n        sensor: \"AI03_FEED\",\n      },\n      fields : {\n        ai_03pv: data,\n      },\n      timestamp: Date.now()\n    }\n  ]\n};\n\ndelete msg.topic;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 1720,
+        "wires": [
+            [
+                "a0054d888c109b96"
+            ]
+        ]
+    },
+    {
+        "id": "f13ac89e91379ab6",
+        "type": "debug",
+        "z": "6a7311205a4adc11",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 1700,
+        "wires": []
+    }
+]
