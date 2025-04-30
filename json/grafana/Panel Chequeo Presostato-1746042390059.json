@@ -1,0 +1,1256 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 16,
+  "links": [],
+  "panels": [
+    {
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "# 🧪 Panel Chequeo Presostato\n\n**Canales:** `DIa.0` `AI.0`\n",
+        "mode": "markdown"
+      },
+      "pluginVersion": "11.6.0",
+      "title": "Taller Instrumentos PRIII",
+      "type": "text"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "id": 18,
+      "panels": [],
+      "repeat": "unidad",
+      "title": "PANEL CHEQUEO PRESOSTATO",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "fejwdjer96dq8a"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 4,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 2,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": ""
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "bar"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "bar g"
+              },
+              {
+                "id": "unit",
+                "value": "bar"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "mbar"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "mbar g"
+              },
+              {
+                "id": "unit",
+                "value": "mbar"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "left"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "psi"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "psi"
+              },
+              {
+                "id": "unit",
+                "value": "pressurepsi"
+              },
+              {
+                "id": "min"
+              },
+              {
+                "id": "fieldMinMax",
+                "value": false
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "mmH2O"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "mmH2O"
+              },
+              {
+                "id": "unit",
+                "value": "mmH2O"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Kg/cm2"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "kg/cm2"
+              },
+              {
+                "id": "unit",
+                "value": "Kg/cm2"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "kpa"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "kpa"
+              },
+              {
+                "id": "unit",
+                "value": "pressurekpa"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DI"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              },
+              {
+                "id": "min",
+                "value": 0
+              },
+              {
+                "id": "max",
+                "value": 1
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 12,
+        "x": 0,
+        "y": 5
+      },
+      "id": 25,
+      "interval": "1s",
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "timezone": [
+          "America/Argentina/Cordoba"
+        ],
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "alias": "raw_data",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fejwdjer96dq8a"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "AI_PV_DATA",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"plc_data_bucket\")\r\n  |> range(start: -5m)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"AI_PV_DATA\" and\r\n    r._field == \"ai_00pv\"\r\n  )\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> map(fn: (r) => ({\r\n        r with\r\n        _time: r._time,\r\n        _value: float(v: r._value)\r\n      })\r\n    )\r\n",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "ai_00pv"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "DI",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fejwdjer96dq8a"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "DI_PV_DATA",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"plc_data_bucket\")\r\n  |> range(start: -5m)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"AI_PV_DATA\" and\r\n    r._field == \"ai_00pv\"\r\n  )\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> map(fn: (r) => ({\r\n        r with\r\n        _time: r._time,\r\n        _value: float(v: r._value)\r\n      })\r\n    )\r\n",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "di00_input"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Presión Manométrica",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "bar",
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "raw_data"
+              ],
+              "reducer": "lastNotNull"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "psi",
+            "binary": {
+              "left": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "bar"
+                }
+              },
+              "operator": "*",
+              "right": {
+                "fixed": "14.504"
+              }
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "mbar",
+            "binary": {
+              "left": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "bar"
+                }
+              },
+              "operator": "*",
+              "right": {
+                "fixed": "1000"
+              }
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Kg/cm2",
+            "binary": {
+              "left": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "bar"
+                }
+              },
+              "operator": "*",
+              "right": {
+                "fixed": "1.01972"
+              }
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "Time",
+                "DI"
+              ],
+              "pattern": "Time|^${unidad}$"
+            }
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "aejwe5yn82scga"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "green",
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "#dc3545",
+                  "index": 0,
+                  "text": "DI 01 --- ❌ Inactivo"
+                },
+                "1": {
+                  "color": "#28a745",
+                  "index": 1,
+                  "text": "DI 01 --- ✅ Activo"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 5
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {
+          "titleSize": 30,
+          "valueSize": 25
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "alias": "DI 01",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "aejwe5yn82scga"
+          },
+          "groupBy": [],
+          "hide": false,
+          "measurement": "DI_PV_DATA_TEST",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"di00_input\") FROM \"DI_PV_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'DI00'\n",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "di00_input"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "sensor::tag",
+              "operator": "=",
+              "value": "DI00"
+            },
+            {
+              "condition": "AND",
+              "key": "time",
+              "operator": ">",
+              "value": "30d"
+            }
+          ]
+        },
+        {
+          "alias": "DI 02",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "aejwe5yn82scga"
+          },
+          "groupBy": [],
+          "hide": true,
+          "measurement": "DI_PV_DATA_TEST",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"di01_input\") FROM \"DI_PV_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'DI01'",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "di01_input"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "sensor::tag",
+              "operator": "=",
+              "value": "DI01"
+            }
+          ]
+        },
+        {
+          "alias": "DI 03",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "aejwe5yn82scga"
+          },
+          "groupBy": [],
+          "hide": true,
+          "measurement": "DI_PV_DATA_TEST",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"di02_input\") FROM \"DI_PV_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'DI02'",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "di02_input"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "sensor::tag",
+              "operator": "=",
+              "value": "DI02"
+            }
+          ]
+        },
+        {
+          "alias": "DI 04",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "aejwe5yn82scga"
+          },
+          "groupBy": [],
+          "hide": true,
+          "measurement": "DI_PV_DATA_TEST",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"di03_input\") FROM \"DI_PV_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'DI03'",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "di03_input"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "sensor::tag",
+              "operator": "=",
+              "value": "DI03"
+            }
+          ]
+        }
+      ],
+      "title": "Contacto Presostato",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "fejwdjer96dq8a"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "mbar"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "mbar g"
+              },
+              {
+                "id": "min",
+                "value": -1000
+              },
+              {
+                "id": "max",
+                "value": 50000
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "bar"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bar g"
+              },
+              {
+                "id": "min",
+                "value": -1
+              },
+              {
+                "id": "max",
+                "value": 49
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "psi"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "pressurepsi"
+              },
+              {
+                "id": "min",
+                "value": -14.5
+              },
+              {
+                "id": "max",
+                "value": 725.2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "mmH2O"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "mmH2O"
+              },
+              {
+                "id": "min",
+                "value": -10197
+              },
+              {
+                "id": "max",
+                "value": 509858.11
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Kg/cm2"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "Kg/cm2"
+              },
+              {
+                "id": "min",
+                "value": -1.02
+              },
+              {
+                "id": "max",
+                "value": 50.99
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "kpa"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "kpa"
+              },
+              {
+                "id": "min",
+                "value": -100
+              },
+              {
+                "id": "max",
+                "value": 5000
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 6,
+        "x": 12,
+        "y": 10
+      },
+      "id": 24,
+      "interval": "1s",
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "limit": 1,
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "alias": "bar",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fejwdjer96dq8a"
+          },
+          "groupBy": [],
+          "hide": false,
+          "measurement": "AI_PV_DATA",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "ai_00pv"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "slimit": "1",
+          "tags": []
+        },
+        {
+          "alias": "lrv",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fejwdjer96dq8a"
+          },
+          "hide": false,
+          "query": "SELECT last(\"ai_00lrv\") AS \"lrv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI00'",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "urv",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fejwdjer96dq8a"
+          },
+          "hide": false,
+          "query": "SELECT last(\"ai_00urv\") AS \"lrv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI00'",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Presión Manométrica",
+      "transformations": [
+        {
+          "disabled": true,
+          "id": "configFromData",
+          "options": {
+            "applyTo": {
+              "id": "byName",
+              "options": "bar"
+            },
+            "configRefId": "B",
+            "mappings": [
+              {
+                "fieldName": "lrv",
+                "handlerKey": "min"
+              }
+            ]
+          }
+        },
+        {
+          "disabled": true,
+          "id": "configFromData",
+          "options": {
+            "applyTo": {
+              "id": "byName",
+              "options": "bar"
+            },
+            "configRefId": "C",
+            "mappings": [
+              {
+                "fieldName": "urv",
+                "handlerKey": "max"
+              }
+            ]
+          }
+        },
+        {
+          "disabled": true,
+          "id": "calculateField",
+          "options": {
+            "alias": "bar g",
+            "binary": {
+              "left": {
+                "fixed": ""
+              },
+              "right": {
+                "fixed": ""
+              }
+            },
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "pv"
+              ],
+              "reducer": "lastNotNull"
+            },
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "psi",
+            "binary": {
+              "left": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "bar"
+                }
+              },
+              "operator": "*",
+              "right": {
+                "fixed": "14.504"
+              }
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "mbar",
+            "binary": {
+              "left": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "bar"
+                }
+              },
+              "operator": "*",
+              "right": {
+                "fixed": "1000"
+              }
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "mmH2O",
+            "binary": {
+              "left": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "bar"
+                }
+              },
+              "operator": "*",
+              "right": {
+                "fixed": "10197.16213"
+              }
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Kg/cm2",
+            "binary": {
+              "left": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "bar"
+                }
+              },
+              "operator": "*",
+              "right": {
+                "fixed": "1.01972"
+              }
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "kpa",
+            "binary": {
+              "left": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "bar"
+                }
+              },
+              "operator": "*",
+              "right": {
+                "fixed": "100"
+              }
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "byVariable": true,
+            "include": {
+              "variable": "$unidad"
+            }
+          }
+        }
+      ],
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "fejwdjer96dq8a"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 10
+      },
+      "id": 21,
+      "options": {
+        "displayMode": "lcd",
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "maxVizHeight": 300,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "sizing": "auto",
+        "valueMode": "color"
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "alias": "LRV",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fejwdjer96dq8a"
+          },
+          "hide": false,
+          "query": "SELECT last(\"ai_00lrv\") AS \"lrv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI00'",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "URV",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fejwdjer96dq8a"
+          },
+          "hide": false,
+          "query": "SELECT last(\"ai_00urv\") AS \"urv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI00'",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Rango actual",
+      "type": "bargauge"
+    }
+  ],
+  "preload": false,
+  "refresh": "5s",
+  "schemaVersion": 41,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allowCustomValue": false,
+        "current": {
+          "text": "bar",
+          "value": "bar"
+        },
+        "label": "Unidad",
+        "name": "unidad",
+        "options": [
+          {
+            "selected": true,
+            "text": "bar",
+            "value": "bar"
+          },
+          {
+            "selected": false,
+            "text": "mbar",
+            "value": "mbar"
+          },
+          {
+            "selected": false,
+            "text": "psi",
+            "value": "psi"
+          },
+          {
+            "selected": false,
+            "text": "Kg/cm2",
+            "value": "Kg/cm2"
+          }
+        ],
+        "query": "bar, mbar, psi, Kg/cm2",
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "1s",
+      "5s",
+      "10s",
+      "30s",
+      "1m"
+    ]
+  },
+  "timezone": "America/Argentina/Cordoba",
+  "title": "Panel Chequeo Presostato",
+  "uid": "eekhoj2dicp34e",
+  "version": 48
+}
