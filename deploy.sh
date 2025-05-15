@@ -5,3 +5,5 @@ if [ $? -ne 0 ]; then exit 1; fi
 
 terraform init -upgrade
 terraform apply -auto-approve
+
+

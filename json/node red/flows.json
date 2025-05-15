@@ -157,6 +157,26 @@
             {
                 "addr": "DB1,X88.4",
                 "name": "di04_input"
+            },
+            {
+                "addr": "DB1,REAL116",
+                "name": "AI04_PV"
+            },
+            {
+                "addr": "DB1,REAL100",
+                "name": "AI04_LRV"
+            },
+            {
+                "addr": "DB1,REAL104",
+                "name": "AI04_URV"
+            },
+            {
+                "addr": "DB1,REAL108",
+                "name": "AI04_LPF"
+            },
+            {
+                "addr": "DB1,REAL112",
+                "name": "AI04_UPF"
             }
         ]
     },
@@ -265,6 +285,13 @@
                 "p": "fields.ai_03pv",
                 "pt": "msg",
                 "to": "$round(msg.payload.AI03_PV, 2)",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "fields.ai_04pv",
+                "pt": "msg",
+                "to": "$round(msg.payload.AI04_PV, 2)",
                 "tot": "jsonata"
             },
             {
@@ -1270,7 +1297,7 @@
         "type": "debug",
         "z": "6a7311205a4adc11",
         "name": "debug 4",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1278,8 +1305,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1800,
-        "y": 840,
+        "x": 2440,
+        "y": 340,
         "wires": []
     },
     {
@@ -1679,6 +1706,190 @@
         "wires": [
             [
                 "cf24e02b29048d1a"
+            ]
+        ]
+    },
+    {
+        "id": "a13f651e2f1683b2",
+        "type": "s7 out",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "variable": "AI04_UPF",
+        "name": "AI04_UPF",
+        "x": 1470,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "af04c976b5b109bb",
+        "type": "s7 out",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "variable": "AI04_LPF",
+        "name": "AI04_LPF",
+        "x": 1460,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "f012740e2fcf85ce",
+        "type": "s7 out",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "variable": "AI04_URV",
+        "name": "AI04_URV",
+        "x": 1470,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "5f24224fed2eb7d2",
+        "type": "s7 out",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "variable": "AI04_LRV",
+        "name": "AI04_LRV",
+        "x": 1470,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "416e7e8d1a863352",
+        "type": "http in",
+        "z": "6a7311205a4adc11",
+        "name": "SET_AI04_RANGES",
+        "url": "/ai4rangeValues",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 980,
+        "y": 1000,
+        "wires": [
+            [
+                "a53a484beb39cbd5",
+                "4b9d0bd5efda90c4"
+            ]
+        ]
+    },
+    {
+        "id": "a53a484beb39cbd5",
+        "type": "http response",
+        "z": "6a7311205a4adc11",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 1200,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "4b9d0bd5efda90c4",
+        "type": "function",
+        "z": "6a7311205a4adc11",
+        "name": "function 6",
+        "func": "let lrv = parseFloat(msg.payload[\"AI04LRV\"]);\nlet urv = parseFloat(msg.payload[\"AI04URV\"]);\nlet unit = msg.payload[\"AI04UNIT\"];\n\nreturn [\n  { payload: lrv }, \n  { payload: urv },  \n  {\n    payload: unit,\n    topic: \"unit\"\n  }  \n];",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1200,
+        "y": 1040,
+        "wires": [
+            [
+                "af04c976b5b109bb",
+                "5f24224fed2eb7d2"
+            ],
+            [
+                "f012740e2fcf85ce",
+                "a13f651e2f1683b2"
+            ],
+            [
+                "6a88b5cd5b78d69d"
+            ]
+        ]
+    },
+    {
+        "id": "4649e5a37422d219",
+        "type": "s7 in",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "mode": "single",
+        "variable": "AI04_LRV",
+        "diff": true,
+        "name": "PLC_DATA_AI04_LRV",
+        "x": 980,
+        "y": 1080,
+        "wires": [
+            [
+                "6a88b5cd5b78d69d"
+            ]
+        ]
+    },
+    {
+        "id": "75c038c846699cc9",
+        "type": "s7 in",
+        "z": "6a7311205a4adc11",
+        "endpoint": "18aeae1926b8fb99",
+        "mode": "single",
+        "variable": "AI04_URV",
+        "diff": true,
+        "name": "PLC_DATA_AI04_URV",
+        "x": 980,
+        "y": 1140,
+        "wires": [
+            [
+                "6a88b5cd5b78d69d"
+            ]
+        ]
+    },
+    {
+        "id": "6a88b5cd5b78d69d",
+        "type": "join",
+        "z": "6a7311205a4adc11",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": false,
+        "accumulate": true,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 1210,
+        "y": 1140,
+        "wires": [
+            [
+                "dd396eef57f83c72"
+            ]
+        ]
+    },
+    {
+        "id": "dd396eef57f83c72",
+        "type": "function",
+        "z": "6a7311205a4adc11",
+        "name": "function 7",
+        "func": "const lrv = parseFloat(msg.payload[\"AI04_LRV\"]);\nconst urv = parseFloat(msg.payload[\"AI04_URV\"]);\nconst unit = msg.payload[\"unit\"];\n\nmsg.payload = {\n  bucket: 'plc_data_bucket_30d',\n  precision: 'ms',\n  data: [\n    {\n      measurement: 'AI_CONFIG_DATA',\n      tags : {\n        sensor: \"AI04\",\n      },\n      fields : {\n        ai_04lrv: lrv,\n        ai_04urv: urv,\n        ai_04unit: unit\n      },\n      timestamp: Date.now()\n    }\n  ]\n};\n\ndelete msg.topic;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1460,
+        "y": 1200,
+        "wires": [
+            [
+                "e118ae8c2e7f96db"
             ]
         ]
     }
