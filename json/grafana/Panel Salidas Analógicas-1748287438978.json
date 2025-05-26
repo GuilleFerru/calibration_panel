@@ -29,7 +29,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "11.6.0"
+      "version": "12.0.0"
     },
     {
       "type": "datasource",
@@ -101,7 +101,7 @@
         "content": "# 🛠️ Panel Salida Analógica\n\n**🔌 Canales:**\n\n**Panel 1:** `AQ.0` `AI.2` `DIa.0` `DIa.1` `DQa.0` `DQa.2` `DQa.4` `DQa.6`  \n \n**Panel 2:** `AQ.1` `AI.3` `DIa.2` `DIa.3` `DQa.1` `DQa.3` `DQa.5` `DQa.7`\n\n\n    ",
         "mode": "markdown"
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "12.0.0",
       "title": "Taller Instrumentos PRIII",
       "type": "text"
     },
@@ -160,7 +160,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "12.0.0",
       "targets": [
         {
           "alias": "bar g",
@@ -256,7 +256,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "12.0.0",
       "targets": [
         {
           "alias": "mbar a",
@@ -358,7 +358,7 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 12,
+        "w": 10,
         "x": 0,
         "y": 7
       },
@@ -384,7 +384,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "12.0.0",
       "targets": [
         {
           "alias": "DI 01",
@@ -551,8 +551,8 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 3,
-        "x": 12,
+        "w": 4,
+        "x": 10,
         "y": 7
       },
       "id": 15,
@@ -639,15 +639,15 @@
         "reset": {
           "backgroundColor": "purple",
           "foregroundColor": "yellow",
-          "icon": "process",
+          "icon": "repeat",
           "text": "Reset",
-          "variant": "hidden"
+          "variant": "secondary"
         },
         "resetAction": {
-          "code": "if (context.panel.response) {\n  context.grafana.notifySuccess(['Update', 'Values updated successfully.']);\n  context.grafana.refresh();\n} else {\n  context.grafana.notifyError(['Update', 'An error occurred updating values.']);\n}",
+          "code": "async function resetCheckboxList(fieldId,url) {\n  try {\n    const field = context.panel.elements.find(el => el.id === fieldId);\n\n    if (!field) {\n      context.grafana.notifyError(['Reset', `No se encontró el campo con ID '${fieldId}'`]);\n      return;\n    }\n\n    const emptyValue = [];\n\n    const response = await fetch(url, {\n      method: \"PUT\",\n      headers: {\n        \"Content-Type\": \"application/json\"\n      },\n      body: JSON.stringify({ [fieldId]: emptyValue }),\n    });\n\n    if (response.ok) {\n      field.value = emptyValue; // Desmarcar visualmente\n      context.grafana.notifySuccess(['Reset', 'Checkboxes desmarcados correctamente.']);\n      context.grafana.refresh();\n    } else {\n      context.grafana.notifyError(['Reset', `Error HTTP: ${response.status}`]);\n    }\n\n  } catch (error) {\n    context.grafana.notifyError(['Reset', 'Error al enviar la solicitud.']);\n    console.error(error);\n  }\n}\n\nresetCheckboxList('DO_OUTPUTS', \"http://localhost:1880/testValues\");\n",
           "confirm": false,
           "getPayload": "return {}",
-          "mode": "initial",
+          "mode": "custom",
           "payload": {}
         },
         "saveDefault": {
@@ -662,13 +662,13 @@
           "text": "Enviar",
           "variant": "primary"
         },
-        "sync": true,
+        "sync": false,
         "update": {
           "code": "if (context.panel.response) {\n  context.grafana.notifySuccess(['Update', 'Valores actualizados correctamente.']);\n  context.grafana.refresh();\n} else {\n  context.grafana.notifyError(['Update', 'A ocurrido un error.']);\n}",
           "confirm": false,
           "contentType": "application/json",
           "getPayload": "const payload = {};\ncontext.panel.elements.forEach((element) => {\n  if (!element.value) {\n    return;\n  }\n  payload[element.id] = element.value;\n})\nreturn payload;",
-          "method": "POST",
+          "method": "PUT",
           "payload": {},
           "payloadMode": "all",
           "url": "http://localhost:1880/testValues"
@@ -730,8 +730,8 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 9,
-        "x": 15,
+        "w": 10,
+        "x": 14,
         "y": 7
       },
       "id": 14,
@@ -756,7 +756,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "12.0.0",
       "targets": [
         {
           "alias": "DO 01 - 24Vcc",
@@ -923,7 +923,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 12,
+        "w": 11,
         "x": 0,
         "y": 14
       },
@@ -1008,7 +1008,7 @@
           "text": "Enviar",
           "variant": "primary"
         },
-        "sync": true,
+        "sync": false,
         "update": {
           "code": "if (context.panel.response) {\n  context.grafana.notifySuccess(['Update', 'Valores actualizados correctamente.']);\n  context.grafana.refresh();\n} else {\n  context.grafana.notifyError(['Update', 'A ocurrido un error.']);\n}",
           "confirm": false,
@@ -1062,8 +1062,8 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 12,
-        "x": 12,
+        "w": 13,
+        "x": 11,
         "y": 14
       },
       "id": 9,
@@ -1091,7 +1091,7 @@
         "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "12.0.0",
       "targets": [
         {
           "datasource": {
@@ -1345,7 +1345,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "12.0.0",
       "targets": [
         {
           "alias": "AO 1",
@@ -1503,8 +1503,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 7,
+        "w": 11,
         "x": 0,
         "y": 27
       },
@@ -1530,7 +1530,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "12.0.0",
       "targets": [
         {
           "alias": "DI 01",
@@ -1696,9 +1696,9 @@
         "uid": "${DS_PLC_DATA_BUCKET_7D}"
       },
       "gridPos": {
-        "h": 8,
-        "w": 3,
-        "x": 12,
+        "h": 7,
+        "w": 4,
+        "x": 11,
         "y": 27
       },
       "id": 20,
@@ -1787,13 +1787,13 @@
           "foregroundColor": "yellow",
           "icon": "process",
           "text": "Reset",
-          "variant": "hidden"
+          "variant": "secondary"
         },
         "resetAction": {
-          "code": "if (context.panel.response) {\n  context.grafana.notifySuccess(['Update', 'Values updated successfully.']);\n  context.grafana.refresh();\n} else {\n  context.grafana.notifyError(['Update', 'An error occurred updating values.']);\n}",
+          "code": "async function resetCheckboxList(fieldId, url) {\n  try {\n    const field = context.panel.elements.find(el => el.id === fieldId);\n\n    if (!field) {\n      context.grafana.notifyError(['Reset', `No se encontró el campo con ID '${fieldId}'`]);\n      return;\n    }\n\n    const emptyValue = [];\n\n    const response = await fetch(url, {\n      method: \"PUT\",\n      headers: {\n        \"Content-Type\": \"application/json\"\n      },\n      body: JSON.stringify({ [fieldId]: emptyValue }),\n    });\n\n    if (response.ok) {\n      field.value = emptyValue; // Desmarcar visualmente\n      context.grafana.notifySuccess(['Reset', 'Checkboxes desmarcados correctamente.']);\n      context.grafana.refresh();\n    } else {\n      context.grafana.notifyError(['Reset', `Error HTTP: ${response.status}`]);\n    }\n\n  } catch (error) {\n    context.grafana.notifyError(['Reset', 'Error al enviar la solicitud.']);\n    console.error(error);\n  }\n}\n\nresetCheckboxList('DO_OUTPUTS', \"http://localhost:1880/testValues\");\n",
           "confirm": false,
           "getPayload": "return {}",
-          "mode": "initial",
+          "mode": "custom",
           "payload": {}
         },
         "saveDefault": {
@@ -1808,13 +1808,13 @@
           "text": "Enviar",
           "variant": "primary"
         },
-        "sync": true,
+        "sync": false,
         "update": {
           "code": "if (context.panel.response) {\n  context.grafana.notifySuccess(['Update', 'Valores actualizados correctamente.']);\n  context.grafana.refresh();\n} else {\n  context.grafana.notifyError(['Update', 'A ocurrido un error.']);\n}",
           "confirm": false,
           "contentType": "application/json",
           "getPayload": "const payload = {};\ncontext.panel.elements.forEach((element) => {\n  if (!element.value) {\n    return;\n  }\n  payload[element.id] = element.value;\n})\nreturn payload;",
-          "method": "POST",
+          "method": "PUT",
           "payload": {},
           "payloadMode": "all",
           "url": "http://localhost:1880/testValues"
@@ -1875,7 +1875,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 9,
         "x": 15,
         "y": 27
@@ -1902,7 +1902,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "12.0.0",
       "targets": [
         {
           "alias": "DO 02 - 24Vcc",
@@ -2071,7 +2071,7 @@
         "h": 4,
         "w": 12,
         "x": 0,
-        "y": 35
+        "y": 34
       },
       "id": 11,
       "options": {
@@ -2154,7 +2154,7 @@
           "text": "Enviar",
           "variant": "primary"
         },
-        "sync": true,
+        "sync": false,
         "update": {
           "code": "if (context.panel.response) {\n  context.grafana.notifySuccess(['Update', 'Valores actualizados correctamente.']);\n  context.grafana.refresh();\n} else {\n  context.grafana.notifyError(['Update', 'A ocurrido un error.']);\n}",
           "confirm": false,
@@ -2210,7 +2210,7 @@
         "h": 4,
         "w": 12,
         "x": 12,
-        "y": 35
+        "y": 34
       },
       "id": 18,
       "options": {
@@ -2237,7 +2237,7 @@
         "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "12.0.0",
       "targets": [
         {
           "datasource": {
@@ -2476,7 +2476,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 39
+        "y": 38
       },
       "id": 10,
       "options": {
@@ -2492,7 +2492,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "12.0.0",
       "targets": [
         {
           "alias": "AO 2",
@@ -2598,14 +2598,14 @@
       "type": "timeseries"
     }
   ],
-  "refresh": "10s",
+  "refresh": "1s",
   "schemaVersion": 41,
   "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -2620,6 +2620,6 @@
   "timezone": "America/Argentina/Cordoba",
   "title": "Panel Salidas Analógicas",
   "uid": "dejlv2gwbchs0a",
-  "version": 38,
+  "version": 75,
   "weekStart": ""
 }

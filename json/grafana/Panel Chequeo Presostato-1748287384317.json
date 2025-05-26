@@ -21,7 +21,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "11.6.0"
+      "version": "12.0.0"
     },
     {
       "type": "datasource",
@@ -87,7 +87,7 @@
         "content": "# 🧪 Panel Chequeo Presostato\n\n**Canales:** `DIa.4` `AI.0`\n",
         "mode": "markdown"
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "12.0.0",
       "title": "Taller Instrumentos PRIII",
       "type": "text"
     },
@@ -350,7 +350,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "12.0.0",
       "targets": [
         {
           "alias": "raw_data",
@@ -604,7 +604,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "12.0.0",
       "targets": [
         {
           "alias": "DI 05",
@@ -830,7 +830,7 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "12.0.0",
       "targets": [
         {
           "alias": "bar",
@@ -1068,7 +1068,7 @@
       "type": "gauge"
     }
   ],
-  "refresh": "5s",
+  "refresh": "1s",
   "schemaVersion": 41,
   "tags": [],
   "templating": {
@@ -1124,6 +1124,6 @@
   "timezone": "America/Argentina/Cordoba",
   "title": "Panel Chequeo Presostato",
   "uid": "eekhoj2dicp34e",
-  "version": 56,
+  "version": 57,
   "weekStart": ""
 }
