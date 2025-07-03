@@ -113,6 +113,7 @@
           "color": {
             "mode": "thresholds"
           },
+          "decimals": 2,
           "mappings": [],
           "thresholds": {
             "mode": "percentage",
@@ -180,10 +181,12 @@
               "type": "fill"
             }
           ],
+          "hide": false,
           "measurement": "AI_PV_DATA",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"plc_data_bucket\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"AI00PV\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> group()",
+          "query": "SELECT last(\"ai_00pv\") AS \"pv\" FROM \"AI_PV_DATA\" WHERE time > now() - 30d",
+          "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -201,9 +204,123 @@
             ]
           ],
           "tags": []
+        },
+        {
+          "alias": "urv",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_PLC_DATA_BUCKET_30D}"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "AI_CONFIG_DATA",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"ai_00lrv\") AS \"lrv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI00'",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "ai_00urv"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "urv",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_PLC_DATA_BUCKET_30D}"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "AI_CONFIG_DATA",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"ai_00urv\") AS \"urv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI00'",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "ai_00urv"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "title": "Patrón manométrico",
+      "transformations": [
+        {
+          "id": "configFromData",
+          "options": {
+            "configRefId": "B",
+            "mappings": [
+              {
+                "fieldName": "lrv",
+                "handlerKey": "min"
+              }
+            ]
+          }
+        },
+        {
+          "id": "configFromData",
+          "options": {
+            "configRefId": "C",
+            "mappings": [
+              {
+                "fieldName": "urv",
+                "handlerKey": "max"
+              }
+            ]
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -218,6 +335,8 @@
           },
           "decimals": 1,
           "mappings": [],
+          "max": 1000,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -303,7 +422,7 @@
       "type": "stat"
     },
     {
-      "collapsed": false,
+      "collapsed": true,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -311,716 +430,721 @@
         "y": 5
       },
       "id": 20,
-      "panels": [],
+      "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_PLC_DATA_BUCKET_30D}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "fieldMinMax": false,
+              "mappings": [],
+              "thresholds": {
+                "mode": "percentage",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 70
+                  },
+                  {
+                    "color": "red",
+                    "value": 90
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 12,
+            "w": 10,
+            "x": 0,
+            "y": 6
+          },
+          "id": 8,
+          "interval": "1s",
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "limit": 1,
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "12.0.0",
+          "targets": [
+            {
+              "alias": "pv",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_PLC_DATA_BUCKET_30D}"
+              },
+              "groupBy": [],
+              "hide": false,
+              "measurement": "AI_PV_DATA",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT last(\"ai_02pv\") FROM \"AI02_DATA\" WHERE $timeFilter SLIMIT 1",
+              "rawQuery": false,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "ai_02pv"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  }
+                ]
+              ]
+            },
+            {
+              "alias": "unit",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_PLC_DATA_BUCKET_30D}"
+              },
+              "groupBy": [],
+              "hide": true,
+              "measurement": "AI_CONFIG_DATA",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "ai_02unit"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "sensor::tag",
+                  "operator": "=",
+                  "value": "AI02"
+                }
+              ]
+            },
+            {
+              "alias": "lrv",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_PLC_DATA_BUCKET_30D}"
+              },
+              "groupBy": [],
+              "hide": true,
+              "measurement": "AI_CONFIG_DATA",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "ai_02lrv"
+                    ],
+                    "type": "field"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "sensor::tag",
+                  "operator": "=",
+                  "value": "AI02"
+                }
+              ]
+            },
+            {
+              "alias": "urv",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_PLC_DATA_BUCKET_30D}"
+              },
+              "groupBy": [],
+              "hide": true,
+              "measurement": "AI_CONFIG_DATA",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "ai_02urv"
+                    ],
+                    "type": "field"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "sensor::tag",
+                  "operator": "=",
+                  "value": "AI02"
+                }
+              ]
+            },
+            {
+              "alias": "unit",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_PLC_DATA_BUCKET_30D}"
+              },
+              "hide": false,
+              "query": "SELECT last(\"ai_02unit\") AS \"unit\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI02'",
+              "rawQuery": true,
+              "refId": "E",
+              "resultFormat": "time_series"
+            },
+            {
+              "alias": "lrv",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_PLC_DATA_BUCKET_30D}"
+              },
+              "hide": false,
+              "query": "SELECT last(\"ai_02lrv\") AS \"lrv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI02'",
+              "rawQuery": true,
+              "refId": "F",
+              "resultFormat": "time_series"
+            },
+            {
+              "alias": "urv",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_PLC_DATA_BUCKET_30D}"
+              },
+              "hide": false,
+              "query": "SELECT last(\"ai_02urv\") AS \"urv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI02'",
+              "rawQuery": true,
+              "refId": "G",
+              "resultFormat": "time_series"
+            }
+          ],
+          "title": "Valor instantaneo AI",
+          "transformations": [
+            {
+              "id": "configFromData",
+              "options": {
+                "applyTo": {
+                  "id": "byName",
+                  "options": "pv"
+                },
+                "configRefId": "E",
+                "mappings": [
+                  {
+                    "fieldName": "unit",
+                    "handlerKey": "unit"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "configFromData",
+              "options": {
+                "applyTo": {
+                  "id": "byName",
+                  "options": "pv"
+                },
+                "configRefId": "F",
+                "mappings": [
+                  {
+                    "fieldName": "lrv",
+                    "handlerKey": "min"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "configFromData",
+              "options": {
+                "applyTo": {
+                  "id": "byName",
+                  "options": "pv"
+                },
+                "configRefId": "G",
+                "mappings": [
+                  {
+                    "fieldName": "urv",
+                    "handlerKey": "max"
+                  }
+                ]
+              }
+            }
+          ],
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_PLC_DATA_BUCKET_30D}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 18,
+            "w": 14,
+            "x": 10,
+            "y": 6
+          },
+          "id": 13,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "12.0.0",
+          "targets": [
+            {
+              "alias": "ai_pv_trend",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_PLC_DATA_BUCKET_30D}"
+              },
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "measurement": "AI_PV_DATA",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "ai_02pv"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "lrv",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_PLC_DATA_BUCKET_30D}"
+              },
+              "hide": true,
+              "query": "SELECT last(\"ai_02lrv\") AS \"lrv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI02'",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series"
+            },
+            {
+              "alias": "urv",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_PLC_DATA_BUCKET_30D}"
+              },
+              "hide": true,
+              "query": "SELECT last(\"ai_02urv\") AS \"urv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI02'",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series"
+            },
+            {
+              "alias": "unit",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_PLC_DATA_BUCKET_30D}"
+              },
+              "hide": false,
+              "query": "SELECT last(\"ai_02unit\") AS \"unit\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI02'",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series"
+            }
+          ],
+          "title": "Tendencia AI",
+          "transformations": [
+            {
+              "disabled": true,
+              "id": "configFromData",
+              "options": {
+                "applyTo": {
+                  "id": "byName",
+                  "options": "ai_pv_trend"
+                },
+                "configRefId": "B",
+                "mappings": [
+                  {
+                    "fieldName": "lrv",
+                    "handlerKey": "min"
+                  }
+                ]
+              }
+            },
+            {
+              "disabled": true,
+              "id": "configFromData",
+              "options": {
+                "applyTo": {
+                  "id": "byName",
+                  "options": "ai_pv_trend"
+                },
+                "configRefId": "C",
+                "mappings": [
+                  {
+                    "fieldName": "urv",
+                    "handlerKey": "max"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "configFromData",
+              "options": {
+                "applyTo": {
+                  "id": "byName",
+                  "options": "ai_pv_trend"
+                },
+                "configRefId": "D",
+                "mappings": [
+                  {
+                    "fieldName": "unit",
+                    "handlerKey": "unit"
+                  }
+                ]
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_PLC_DATA_BUCKET_30D}"
+          },
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 5,
+            "x": 0,
+            "y": 18
+          },
+          "id": 7,
+          "options": {
+            "buttonGroup": {
+              "orientation": "center",
+              "size": "md"
+            },
+            "confirmModal": {
+              "body": "Please confirm to update changed values",
+              "cancel": "Cancel",
+              "columns": {
+                "include": [
+                  "name",
+                  "oldValue",
+                  "newValue"
+                ],
+                "name": "Label",
+                "newValue": "New Value",
+                "oldValue": "Old Value"
+              },
+              "confirm": "Confirm",
+              "elementDisplayMode": "modified",
+              "title": "Confirm update request"
+            },
+            "elementValueChanged": "",
+            "elements": [
+              {
+                "id": "AI02LRV",
+                "section": "",
+                "showIf": "",
+                "title": "AI LRV",
+                "tooltip": "",
+                "type": "number",
+                "uid": "1bcafe47-0a3f-42f5-aae1-2547ddc1f3f9",
+                "unit": "",
+                "value": 0
+              },
+              {
+                "id": "AI02URV",
+                "section": "",
+                "title": "AI URV",
+                "tooltip": "",
+                "type": "number",
+                "uid": "70aa654d-92be-4fb9-8bf6-98a6d5e0e4b1",
+                "unit": "",
+                "value": 0
+              },
+              {
+                "hidden": false,
+                "id": "AI02UNIT",
+                "section": "",
+                "title": "Unidad",
+                "tooltip": "",
+                "type": "string",
+                "uid": "1090ddbe-517b-4bba-9260-9a8fab19b4e8",
+                "unit": "",
+                "value": ""
+              }
+            ],
+            "initial": {
+              "code": "// console.log(context.panel.data, context.panel.response, context.panel.initial, context.panel.elements);\n\n// return;\n\n// /**\n//  * Data Source\n//  * Requires form elements to be defined\n//  */\n// const dataQuery = context.utils.toDataQueryResponse(context.panel.response);\n// console.log(dataQuery);",
+              "contentType": "application/json",
+              "getPayload": "return {}",
+              "header": [],
+              "highlight": false,
+              "highlightColor": "red",
+              "method": "-",
+              "payload": {}
+            },
+            "layout": {
+              "orientation": "horizontal",
+              "padding": 10,
+              "sectionVariant": "default",
+              "variant": "single"
+            },
+            "reset": {
+              "backgroundColor": "purple",
+              "foregroundColor": "yellow",
+              "icon": "process",
+              "text": "Reset",
+              "variant": "hidden"
+            },
+            "resetAction": {
+              "code": "if (context.panel.response) {\n  context.grafana.notifySuccess(['Update', 'Values updated successfully.']);\n  context.grafana.refresh();\n} else {\n  context.grafana.notifyError(['Update', 'An error occurred updating values.']);\n}",
+              "confirm": false,
+              "getPayload": "return {}",
+              "mode": "initial",
+              "payload": {}
+            },
+            "saveDefault": {
+              "icon": "save",
+              "text": "Save Default",
+              "variant": "hidden"
+            },
+            "submit": {
+              "backgroundColor": "purple",
+              "foregroundColor": "yellow",
+              "icon": "cloud-upload",
+              "text": "Guardar",
+              "variant": "primary"
+            },
+            "sync": false,
+            "update": {
+              "code": "if (context.panel.response) {\n  context.grafana.notifySuccess(['Update', 'Valores actualizados correctamente.']);\n  context.grafana.refresh();\n} else {\n  context.grafana.notifyError(['Update', 'A ocurrido un error.']);\n}",
+              "confirm": false,
+              "contentType": "application/json",
+              "getPayload": "const payload = {};\ncontext.panel.elements.forEach((element) => {\n  if (!element.value) {\n    return;\n  }\n  payload[element.id] = element.value;\n})\nreturn payload;",
+              "method": "POST",
+              "payload": {},
+              "payloadMode": "all",
+              "url": "http://localhost:1880/ai2rangeValues"
+            },
+            "updateEnabled": "auto"
+          },
+          "pluginVersion": "5.1.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_PLC_DATA_BUCKET_30D}"
+              },
+              "hide": true,
+              "refId": "A"
+            }
+          ],
+          "title": "AI 3 Configuración LRV y URV",
+          "type": "volkovlabs-form-panel"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_PLC_DATA_BUCKET_30D}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 5,
+            "x": 5,
+            "y": 18
+          },
+          "id": 12,
+          "options": {
+            "displayMode": "lcd",
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "maxVizHeight": 300,
+            "minVizHeight": 16,
+            "minVizWidth": 8,
+            "namePlacement": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true,
+            "sizing": "auto",
+            "valueMode": "color"
+          },
+          "pluginVersion": "12.0.0",
+          "targets": [
+            {
+              "alias": "LRV",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_PLC_DATA_BUCKET_30D}"
+              },
+              "hide": false,
+              "query": "SELECT last(\"ai_02lrv\") AS \"lrv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI02'",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series"
+            },
+            {
+              "alias": "URV",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_PLC_DATA_BUCKET_30D}"
+              },
+              "hide": false,
+              "query": "SELECT last(\"ai_02urv\") AS \"urv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI02'",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series"
+            }
+          ],
+          "title": "Rango actual",
+          "type": "bargauge"
+        }
+      ],
       "title": "PANEL ENTRADA ANALOGICA 3",
       "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "${DS_PLC_DATA_BUCKET_30D}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 2,
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "#EAB839",
-                "value": 70
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 12,
-        "w": 10,
-        "x": 0,
-        "y": 6
-      },
-      "id": 8,
-      "interval": "1s",
-      "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "limit": 1,
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
-      },
-      "pluginVersion": "12.0.0",
-      "targets": [
-        {
-          "alias": "pv",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_PLC_DATA_BUCKET_30D}"
-          },
-          "groupBy": [],
-          "hide": false,
-          "measurement": "AI_PV_DATA",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT last(\"ai_02pv\") FROM \"AI02_DATA\" WHERE $timeFilter SLIMIT 1",
-          "rawQuery": false,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "ai_02pv"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ]
-        },
-        {
-          "alias": "unit",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_PLC_DATA_BUCKET_30D}"
-          },
-          "groupBy": [],
-          "hide": true,
-          "measurement": "AI_CONFIG_DATA",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "ai_02unit"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "sensor::tag",
-              "operator": "=",
-              "value": "AI02"
-            }
-          ]
-        },
-        {
-          "alias": "lrv",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_PLC_DATA_BUCKET_30D}"
-          },
-          "groupBy": [],
-          "hide": true,
-          "measurement": "AI_CONFIG_DATA",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "ai_02lrv"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "sensor::tag",
-              "operator": "=",
-              "value": "AI02"
-            }
-          ]
-        },
-        {
-          "alias": "urv",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_PLC_DATA_BUCKET_30D}"
-          },
-          "groupBy": [],
-          "hide": true,
-          "measurement": "AI_CONFIG_DATA",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "D",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "ai_02urv"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "sensor::tag",
-              "operator": "=",
-              "value": "AI02"
-            }
-          ]
-        },
-        {
-          "alias": "unit",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_PLC_DATA_BUCKET_30D}"
-          },
-          "hide": false,
-          "query": "SELECT last(\"ai_02unit\") AS \"unit\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI02'",
-          "rawQuery": true,
-          "refId": "E",
-          "resultFormat": "time_series"
-        },
-        {
-          "alias": "lrv",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_PLC_DATA_BUCKET_30D}"
-          },
-          "hide": false,
-          "query": "SELECT last(\"ai_02lrv\") AS \"lrv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI02'",
-          "rawQuery": true,
-          "refId": "F",
-          "resultFormat": "time_series"
-        },
-        {
-          "alias": "urv",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_PLC_DATA_BUCKET_30D}"
-          },
-          "hide": false,
-          "query": "SELECT last(\"ai_02urv\") AS \"urv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI02'",
-          "rawQuery": true,
-          "refId": "G",
-          "resultFormat": "time_series"
-        }
-      ],
-      "title": "Valor instantaneo AI",
-      "transformations": [
-        {
-          "id": "configFromData",
-          "options": {
-            "applyTo": {
-              "id": "byName",
-              "options": "pv"
-            },
-            "configRefId": "E",
-            "mappings": [
-              {
-                "fieldName": "unit",
-                "handlerKey": "unit"
-              }
-            ]
-          }
-        },
-        {
-          "id": "configFromData",
-          "options": {
-            "applyTo": {
-              "id": "byName",
-              "options": "pv"
-            },
-            "configRefId": "F",
-            "mappings": [
-              {
-                "fieldName": "lrv",
-                "handlerKey": "min"
-              }
-            ]
-          }
-        },
-        {
-          "id": "configFromData",
-          "options": {
-            "applyTo": {
-              "id": "byName",
-              "options": "pv"
-            },
-            "configRefId": "G",
-            "mappings": [
-              {
-                "fieldName": "urv",
-                "handlerKey": "max"
-              }
-            ]
-          }
-        }
-      ],
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "${DS_PLC_DATA_BUCKET_30D}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 18,
-        "w": 14,
-        "x": 10,
-        "y": 6
-      },
-      "id": 13,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "12.0.0",
-      "targets": [
-        {
-          "alias": "ai_pv_trend",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_PLC_DATA_BUCKET_30D}"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "AI_PV_DATA",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "ai_02pv"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "lrv",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_PLC_DATA_BUCKET_30D}"
-          },
-          "hide": true,
-          "query": "SELECT last(\"ai_02lrv\") AS \"lrv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI02'",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "time_series"
-        },
-        {
-          "alias": "urv",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_PLC_DATA_BUCKET_30D}"
-          },
-          "hide": true,
-          "query": "SELECT last(\"ai_02urv\") AS \"urv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI02'",
-          "rawQuery": true,
-          "refId": "C",
-          "resultFormat": "time_series"
-        },
-        {
-          "alias": "unit",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_PLC_DATA_BUCKET_30D}"
-          },
-          "hide": false,
-          "query": "SELECT last(\"ai_02unit\") AS \"unit\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI02'",
-          "rawQuery": true,
-          "refId": "D",
-          "resultFormat": "time_series"
-        }
-      ],
-      "title": "Tendencia AI",
-      "transformations": [
-        {
-          "disabled": true,
-          "id": "configFromData",
-          "options": {
-            "applyTo": {
-              "id": "byName",
-              "options": "ai_pv_trend"
-            },
-            "configRefId": "B",
-            "mappings": [
-              {
-                "fieldName": "lrv",
-                "handlerKey": "min"
-              }
-            ]
-          }
-        },
-        {
-          "disabled": true,
-          "id": "configFromData",
-          "options": {
-            "applyTo": {
-              "id": "byName",
-              "options": "ai_pv_trend"
-            },
-            "configRefId": "C",
-            "mappings": [
-              {
-                "fieldName": "urv",
-                "handlerKey": "max"
-              }
-            ]
-          }
-        },
-        {
-          "id": "configFromData",
-          "options": {
-            "applyTo": {
-              "id": "byName",
-              "options": "ai_pv_trend"
-            },
-            "configRefId": "D",
-            "mappings": [
-              {
-                "fieldName": "unit",
-                "handlerKey": "unit"
-              }
-            ]
-          }
-        }
-      ],
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "${DS_PLC_DATA_BUCKET_30D}"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 0,
-        "y": 18
-      },
-      "id": 7,
-      "options": {
-        "buttonGroup": {
-          "orientation": "center",
-          "size": "md"
-        },
-        "confirmModal": {
-          "body": "Please confirm to update changed values",
-          "cancel": "Cancel",
-          "columns": {
-            "include": [
-              "name",
-              "oldValue",
-              "newValue"
-            ],
-            "name": "Label",
-            "newValue": "New Value",
-            "oldValue": "Old Value"
-          },
-          "confirm": "Confirm",
-          "elementDisplayMode": "modified",
-          "title": "Confirm update request"
-        },
-        "elementValueChanged": "",
-        "elements": [
-          {
-            "id": "AI02LRV",
-            "section": "",
-            "showIf": "",
-            "title": "AI LRV",
-            "tooltip": "",
-            "type": "number",
-            "uid": "1bcafe47-0a3f-42f5-aae1-2547ddc1f3f9",
-            "unit": "",
-            "value": 0
-          },
-          {
-            "id": "AI02URV",
-            "section": "",
-            "title": "AI URV",
-            "tooltip": "",
-            "type": "number",
-            "uid": "70aa654d-92be-4fb9-8bf6-98a6d5e0e4b1",
-            "unit": "",
-            "value": 0
-          },
-          {
-            "hidden": false,
-            "id": "AI02UNIT",
-            "section": "",
-            "title": "Unidad",
-            "tooltip": "",
-            "type": "string",
-            "uid": "1090ddbe-517b-4bba-9260-9a8fab19b4e8",
-            "unit": "",
-            "value": ""
-          }
-        ],
-        "initial": {
-          "code": "// console.log(context.panel.data, context.panel.response, context.panel.initial, context.panel.elements);\n\n// return;\n\n// /**\n//  * Data Source\n//  * Requires form elements to be defined\n//  */\n// const dataQuery = context.utils.toDataQueryResponse(context.panel.response);\n// console.log(dataQuery);",
-          "contentType": "application/json",
-          "getPayload": "return {}",
-          "header": [],
-          "highlight": false,
-          "highlightColor": "red",
-          "method": "-",
-          "payload": {}
-        },
-        "layout": {
-          "orientation": "horizontal",
-          "padding": 10,
-          "sectionVariant": "default",
-          "variant": "single"
-        },
-        "reset": {
-          "backgroundColor": "purple",
-          "foregroundColor": "yellow",
-          "icon": "process",
-          "text": "Reset",
-          "variant": "hidden"
-        },
-        "resetAction": {
-          "code": "if (context.panel.response) {\n  context.grafana.notifySuccess(['Update', 'Values updated successfully.']);\n  context.grafana.refresh();\n} else {\n  context.grafana.notifyError(['Update', 'An error occurred updating values.']);\n}",
-          "confirm": false,
-          "getPayload": "return {}",
-          "mode": "initial",
-          "payload": {}
-        },
-        "saveDefault": {
-          "icon": "save",
-          "text": "Save Default",
-          "variant": "hidden"
-        },
-        "submit": {
-          "backgroundColor": "purple",
-          "foregroundColor": "yellow",
-          "icon": "cloud-upload",
-          "text": "Guardar",
-          "variant": "primary"
-        },
-        "sync": false,
-        "update": {
-          "code": "if (context.panel.response) {\n  context.grafana.notifySuccess(['Update', 'Valores actualizados correctamente.']);\n  context.grafana.refresh();\n} else {\n  context.grafana.notifyError(['Update', 'A ocurrido un error.']);\n}",
-          "confirm": false,
-          "contentType": "application/json",
-          "getPayload": "const payload = {};\ncontext.panel.elements.forEach((element) => {\n  if (!element.value) {\n    return;\n  }\n  payload[element.id] = element.value;\n})\nreturn payload;",
-          "method": "POST",
-          "payload": {},
-          "payloadMode": "all",
-          "url": "http://localhost:1880/ai2rangeValues"
-        },
-        "updateEnabled": "auto"
-      },
-      "pluginVersion": "5.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_PLC_DATA_BUCKET_30D}"
-          },
-          "hide": true,
-          "refId": "A"
-        }
-      ],
-      "title": "AI 3 Configuración LRV y URV",
-      "type": "volkovlabs-form-panel"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "${DS_PLC_DATA_BUCKET_30D}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 5,
-        "y": 18
-      },
-      "id": 12,
-      "options": {
-        "displayMode": "lcd",
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "maxVizHeight": 300,
-        "minVizHeight": 16,
-        "minVizWidth": 8,
-        "namePlacement": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true,
-        "sizing": "auto",
-        "valueMode": "color"
-      },
-      "pluginVersion": "12.0.0",
-      "targets": [
-        {
-          "alias": "LRV",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_PLC_DATA_BUCKET_30D}"
-          },
-          "hide": false,
-          "query": "SELECT last(\"ai_02lrv\") AS \"lrv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI02'",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series"
-        },
-        {
-          "alias": "URV",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_PLC_DATA_BUCKET_30D}"
-          },
-          "hide": false,
-          "query": "SELECT last(\"ai_02urv\") AS \"urv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI02'",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "time_series"
-        }
-      ],
-      "title": "Rango actual",
-      "type": "bargauge"
     },
     {
       "collapsed": false,
@@ -1028,7 +1152,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 24
+        "y": 6
       },
       "id": 15,
       "panels": [],
@@ -1071,7 +1195,7 @@
         "h": 12,
         "w": 10,
         "x": 0,
-        "y": 25
+        "y": 7
       },
       "id": 16,
       "interval": "1s",
@@ -1241,7 +1365,10 @@
               "viz": false
             },
             "insertNulls": false,
-            "lineInterpolation": "linear",
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
@@ -1257,6 +1384,7 @@
               "mode": "off"
             }
           },
+          "fieldMinMax": true,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -1270,12 +1398,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 18,
+        "h": 9,
         "w": 14,
         "x": 10,
-        "y": 25
+        "y": 7
       },
-      "id": 17,
+      "id": 26,
       "options": {
         "legend": {
           "calcs": [],
@@ -1370,7 +1498,7 @@
           "resultFormat": "time_series"
         }
       ],
-      "title": "Tendencia AI",
+      "title": "Tendencia AI dinamica",
       "transformations": [
         {
           "disabled": true,
@@ -1430,11 +1558,220 @@
         "type": "influxdb",
         "uid": "${DS_PLC_DATA_BUCKET_30D}"
       },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 10,
+        "y": 16
+      },
+      "id": 17,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "alias": "ai_pv_trend",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_PLC_DATA_BUCKET_30D}"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "AI_PV_DATA",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "ai_03pv"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "lrv",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_PLC_DATA_BUCKET_30D}"
+          },
+          "hide": false,
+          "query": "SELECT last(\"ai_03lrv\") AS \"lrv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI03'",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "urv",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_PLC_DATA_BUCKET_30D}"
+          },
+          "hide": false,
+          "query": "SELECT last(\"ai_03urv\") AS \"urv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI03'",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "unit",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_PLC_DATA_BUCKET_30D}"
+          },
+          "hide": false,
+          "query": "SELECT last(\"ai_03unit\") AS \"unit\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI03'",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Tendencia AI rango completo",
+      "transformations": [
+        {
+          "id": "configFromData",
+          "options": {
+            "applyTo": {
+              "id": "byName",
+              "options": "ai_pv_trend"
+            },
+            "configRefId": "B",
+            "mappings": [
+              {
+                "fieldName": "lrv",
+                "handlerKey": "min"
+              }
+            ]
+          }
+        },
+        {
+          "id": "configFromData",
+          "options": {
+            "applyTo": {
+              "id": "byName",
+              "options": "ai_pv_trend"
+            },
+            "configRefId": "C",
+            "mappings": [
+              {
+                "fieldName": "urv",
+                "handlerKey": "max"
+              }
+            ]
+          }
+        },
+        {
+          "id": "configFromData",
+          "options": {
+            "applyTo": {
+              "id": "byName",
+              "options": "ai_pv_trend"
+            },
+            "configRefId": "D",
+            "mappings": [
+              {
+                "fieldName": "unit",
+                "handlerKey": "unit"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_PLC_DATA_BUCKET_30D}"
+      },
       "gridPos": {
         "h": 6,
         "w": 5,
         "x": 0,
-        "y": 37
+        "y": 19
       },
       "id": 18,
       "options": {
@@ -1589,7 +1926,7 @@
         "h": 6,
         "w": 5,
         "x": 5,
-        "y": 37
+        "y": 19
       },
       "id": 19,
       "options": {
@@ -1652,7 +1989,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 43
+        "y": 25
       },
       "id": 14,
       "panels": [],
@@ -1695,7 +2032,7 @@
         "h": 12,
         "w": 10,
         "x": 0,
-        "y": 44
+        "y": 26
       },
       "id": 23,
       "interval": "1s",
@@ -1894,10 +2231,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 18,
+        "h": 9,
         "w": 14,
         "x": 10,
-        "y": 44
+        "y": 26
       },
       "id": 22,
       "options": {
@@ -2054,11 +2391,220 @@
         "type": "influxdb",
         "uid": "${DS_PLC_DATA_BUCKET_30D}"
       },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 10,
+        "y": 35
+      },
+      "id": 27,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "alias": "ai_pv_trend",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_PLC_DATA_BUCKET_30D}"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "AI_PV_DATA",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "ai_04pv"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "lrv",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_PLC_DATA_BUCKET_30D}"
+          },
+          "hide": false,
+          "query": "SELECT last(\"ai_04lrv\") AS \"lrv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI04'",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "urv",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_PLC_DATA_BUCKET_30D}"
+          },
+          "hide": false,
+          "query": "SELECT last(\"ai_04urv\") AS \"urv\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI04'",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "unit",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_PLC_DATA_BUCKET_30D}"
+          },
+          "hide": false,
+          "query": "SELECT last(\"ai_04unit\") AS \"unit\" FROM \"AI_CONFIG_DATA\" WHERE time > now() - 30d AND \"sensor\"::tag = 'AI04'",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Tendencia AI rango completo",
+      "transformations": [
+        {
+          "id": "configFromData",
+          "options": {
+            "applyTo": {
+              "id": "byName",
+              "options": "ai_pv_trend"
+            },
+            "configRefId": "B",
+            "mappings": [
+              {
+                "fieldName": "lrv",
+                "handlerKey": "min"
+              }
+            ]
+          }
+        },
+        {
+          "id": "configFromData",
+          "options": {
+            "applyTo": {
+              "id": "byName",
+              "options": "ai_pv_trend"
+            },
+            "configRefId": "C",
+            "mappings": [
+              {
+                "fieldName": "urv",
+                "handlerKey": "max"
+              }
+            ]
+          }
+        },
+        {
+          "id": "configFromData",
+          "options": {
+            "applyTo": {
+              "id": "byName",
+              "options": "ai_pv_trend"
+            },
+            "configRefId": "D",
+            "mappings": [
+              {
+                "fieldName": "unit",
+                "handlerKey": "unit"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_PLC_DATA_BUCKET_30D}"
+      },
       "gridPos": {
         "h": 6,
         "w": 5,
         "x": 0,
-        "y": 56
+        "y": 38
       },
       "id": 24,
       "options": {
@@ -2213,7 +2759,7 @@
         "h": 6,
         "w": 5,
         "x": 5,
-        "y": 56
+        "y": 38
       },
       "id": 25,
       "options": {
@@ -2293,6 +2839,6 @@
   "timezone": "America/Argentina/Cordoba",
   "title": "Panel Entradas Analógicas",
   "uid": "cejwise1cwe80a",
-  "version": 51,
+  "version": 68,
   "weekStart": ""
 }

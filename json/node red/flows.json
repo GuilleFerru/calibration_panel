@@ -8,210 +8,6 @@
         "env": []
     },
     {
-        "id": "18aeae1926b8fb99",
-        "type": "s7 endpoint",
-        "transport": "iso-on-tcp",
-        "address": "192.168.0.1",
-        "port": "102",
-        "rack": "0",
-        "slot": "1",
-        "localtsaphi": "01",
-        "localtsaplo": "00",
-        "remotetsaphi": "01",
-        "remotetsaplo": "00",
-        "connmode": "rack-slot",
-        "adapter": "",
-        "busaddr": 2,
-        "cycletime": "1000",
-        "timeout": "2000",
-        "name": "PLC",
-        "vartable": [
-            {
-                "addr": "DB1,REAL16",
-                "name": "AI00_PV"
-            },
-            {
-                "addr": "DB1,REAL4",
-                "name": "AI00_URV"
-            },
-            {
-                "addr": "DB1,REAL0",
-                "name": "AI00_LRV"
-            },
-            {
-                "addr": "DB1,REAL8",
-                "name": "AI00_LPF"
-            },
-            {
-                "addr": "DB1,REAL12",
-                "name": "AI00_UPF"
-            },
-            {
-                "addr": "DB1,REAL36",
-                "name": "AI01_PV"
-            },
-            {
-                "addr": "DB1,REAL40",
-                "name": "AI02_PV"
-            },
-            {
-                "addr": "DB1,REAL44",
-                "name": "AI02_LRV"
-            },
-            {
-                "addr": "DB1,REAL48",
-                "name": "AI02_URV"
-            },
-            {
-                "addr": "DB1,REAL52",
-                "name": "AI02_LPF"
-            },
-            {
-                "addr": "DB1,REAL56",
-                "name": "AI02_UPF"
-            },
-            {
-                "addr": "DB1,REAL60",
-                "name": "AI03_PV"
-            },
-            {
-                "addr": "DB1,REAL64",
-                "name": "AI03_LRV"
-            },
-            {
-                "addr": "DB1,REAL68",
-                "name": "AI03_URV"
-            },
-            {
-                "addr": "DB1,REAL72",
-                "name": "AI03_LPF"
-            },
-            {
-                "addr": "DB1,REAL76",
-                "name": "AI03_UPF"
-            },
-            {
-                "addr": "DB1,REAL80",
-                "name": "AO00_OUT"
-            },
-            {
-                "addr": "DB1,REAL84",
-                "name": "AO01_OUT"
-            },
-            {
-                "addr": "DB1,X88.0",
-                "name": "di00_input"
-            },
-            {
-                "addr": "DB1,X88.1",
-                "name": "di01_input"
-            },
-            {
-                "addr": "DB1,X88.2",
-                "name": "di02_input"
-            },
-            {
-                "addr": "DB1,X88.3",
-                "name": "di03_input"
-            },
-            {
-                "addr": "DB1,X89.6",
-                "name": "DO00_OUT"
-            },
-            {
-                "addr": "DB1,X89.7",
-                "name": "DO01_OUT"
-            },
-            {
-                "addr": "DB1,X90.0",
-                "name": "DO02_OUT"
-            },
-            {
-                "addr": "DB1,X90.1",
-                "name": "DO03_OUT"
-            },
-            {
-                "addr": "DB1,REAL92",
-                "name": "AI02_OUT_FEED"
-            },
-            {
-                "addr": "DB1,REAL96",
-                "name": "AI03_OUT_FEED"
-            },
-            {
-                "addr": "DB1,X90.2",
-                "name": "DO04_OUT"
-            },
-            {
-                "addr": "DB1,X90.3",
-                "name": "DO05_OUT"
-            },
-            {
-                "addr": "DB1,X90.4",
-                "name": "DO06_OUT"
-            },
-            {
-                "addr": "DB1,X90.5",
-                "name": "DO07_OUT"
-            },
-            {
-                "addr": "DB1,X88.4",
-                "name": "di04_input"
-            },
-            {
-                "addr": "DB1,REAL116",
-                "name": "AI04_PV"
-            },
-            {
-                "addr": "DB1,REAL100",
-                "name": "AI04_LRV"
-            },
-            {
-                "addr": "DB1,REAL104",
-                "name": "AI04_URV"
-            },
-            {
-                "addr": "DB1,REAL108",
-                "name": "AI04_LPF"
-            },
-            {
-                "addr": "DB1,REAL112",
-                "name": "AI04_UPF"
-            }
-        ]
-    },
-    {
-        "id": "eb62f4a37356a9bb",
-        "type": "influxdb",
-        "hostname": "127.0.0.1",
-        "port": 8086,
-        "protocol": "http",
-        "database": "database",
-        "name": "plc_data_bucket_30d",
-        "usetls": false,
-        "tls": "",
-        "influxdbVersion": "2.0",
-        "url": "http://influxdb_prod:8086",
-        "timeout": 10,
-        "rejectUnauthorized": true
-    },
-    {
-        "id": "842c5309cb6a0bcd",
-        "type": "Stackhero-InfluxDB-v2-Server",
-        "name": "plc_data_bucket_7d",
-        "host": "influxdb_prod",
-        "port": "8086",
-        "tls": false
-    },
-    {
-        "id": "b2b5d4703beef4f4",
-        "type": "Stackhero-InfluxDB-v2-Server",
-        "name": "plc_data_bucket_30d",
-        "host": "influxdb_prod",
-        "port": "8086",
-        "tls": false
-    },
-    {
         "id": "8b381bd95889d862",
         "type": "s7 in",
         "z": "6a7311205a4adc11",
@@ -1892,5 +1688,209 @@
                 "e118ae8c2e7f96db"
             ]
         ]
+    },
+    {
+        "id": "18aeae1926b8fb99",
+        "type": "s7 endpoint",
+        "transport": "iso-on-tcp",
+        "address": "192.168.0.1",
+        "port": "102",
+        "rack": "0",
+        "slot": "1",
+        "localtsaphi": "01",
+        "localtsaplo": "00",
+        "remotetsaphi": "01",
+        "remotetsaplo": "00",
+        "connmode": "rack-slot",
+        "adapter": "",
+        "busaddr": 2,
+        "cycletime": "1000",
+        "timeout": "2000",
+        "name": "PLC",
+        "vartable": [
+            {
+                "addr": "DB1,REAL16",
+                "name": "AI00_PV"
+            },
+            {
+                "addr": "DB1,REAL4",
+                "name": "AI00_URV"
+            },
+            {
+                "addr": "DB1,REAL0",
+                "name": "AI00_LRV"
+            },
+            {
+                "addr": "DB1,REAL8",
+                "name": "AI00_LPF"
+            },
+            {
+                "addr": "DB1,REAL12",
+                "name": "AI00_UPF"
+            },
+            {
+                "addr": "DB1,REAL36",
+                "name": "AI01_PV"
+            },
+            {
+                "addr": "DB1,REAL40",
+                "name": "AI02_PV"
+            },
+            {
+                "addr": "DB1,REAL44",
+                "name": "AI02_LRV"
+            },
+            {
+                "addr": "DB1,REAL48",
+                "name": "AI02_URV"
+            },
+            {
+                "addr": "DB1,REAL52",
+                "name": "AI02_LPF"
+            },
+            {
+                "addr": "DB1,REAL56",
+                "name": "AI02_UPF"
+            },
+            {
+                "addr": "DB1,REAL60",
+                "name": "AI03_PV"
+            },
+            {
+                "addr": "DB1,REAL64",
+                "name": "AI03_LRV"
+            },
+            {
+                "addr": "DB1,REAL68",
+                "name": "AI03_URV"
+            },
+            {
+                "addr": "DB1,REAL72",
+                "name": "AI03_LPF"
+            },
+            {
+                "addr": "DB1,REAL76",
+                "name": "AI03_UPF"
+            },
+            {
+                "addr": "DB1,REAL80",
+                "name": "AO00_OUT"
+            },
+            {
+                "addr": "DB1,REAL84",
+                "name": "AO01_OUT"
+            },
+            {
+                "addr": "DB1,X88.0",
+                "name": "di00_input"
+            },
+            {
+                "addr": "DB1,X88.1",
+                "name": "di01_input"
+            },
+            {
+                "addr": "DB1,X88.2",
+                "name": "di02_input"
+            },
+            {
+                "addr": "DB1,X88.3",
+                "name": "di03_input"
+            },
+            {
+                "addr": "DB1,X89.6",
+                "name": "DO00_OUT"
+            },
+            {
+                "addr": "DB1,X89.7",
+                "name": "DO01_OUT"
+            },
+            {
+                "addr": "DB1,X90.0",
+                "name": "DO02_OUT"
+            },
+            {
+                "addr": "DB1,X90.1",
+                "name": "DO03_OUT"
+            },
+            {
+                "addr": "DB1,REAL92",
+                "name": "AI02_OUT_FEED"
+            },
+            {
+                "addr": "DB1,REAL96",
+                "name": "AI03_OUT_FEED"
+            },
+            {
+                "addr": "DB1,X90.2",
+                "name": "DO04_OUT"
+            },
+            {
+                "addr": "DB1,X90.3",
+                "name": "DO05_OUT"
+            },
+            {
+                "addr": "DB1,X90.4",
+                "name": "DO06_OUT"
+            },
+            {
+                "addr": "DB1,X90.5",
+                "name": "DO07_OUT"
+            },
+            {
+                "addr": "DB1,X88.4",
+                "name": "di04_input"
+            },
+            {
+                "addr": "DB1,REAL116",
+                "name": "AI04_PV"
+            },
+            {
+                "addr": "DB1,REAL100",
+                "name": "AI04_LRV"
+            },
+            {
+                "addr": "DB1,REAL104",
+                "name": "AI04_URV"
+            },
+            {
+                "addr": "DB1,REAL108",
+                "name": "AI04_LPF"
+            },
+            {
+                "addr": "DB1,REAL112",
+                "name": "AI04_UPF"
+            }
+        ]
+    },
+    {
+        "id": "eb62f4a37356a9bb",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "plc_data_bucket_30d",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://influxdb_prod:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "842c5309cb6a0bcd",
+        "type": "Stackhero-InfluxDB-v2-Server",
+        "name": "plc_data_bucket_7d",
+        "host": "influxdb_prod",
+        "port": "8086",
+        "tls": false
+    },
+    {
+        "id": "b2b5d4703beef4f4",
+        "type": "Stackhero-InfluxDB-v2-Server",
+        "name": "plc_data_bucket_30d",
+        "host": "influxdb_prod",
+        "port": "8086",
+        "tls": false
     }
 ]
