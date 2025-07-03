@@ -84,6 +84,10 @@ resource "docker_container" "grafana_prod" {
     host_path      = abspath("${path.module}/grafana_data")
     container_path = "/var/lib/grafana"
   }
+  volumes {
+    host_path      = abspath("${path.module}/grafana_init/grafana.ini")
+    container_path = "/etc/grafana/grafana.ini"
+  }
   env = [
     "GF_SECURITY_ADMIN_USER=${var.grafana_user}",
     "GF_SECURITY_ADMIN_PASSWORD=${var.grafana_pass}"
